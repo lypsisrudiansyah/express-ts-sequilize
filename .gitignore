@@ -1,0 +1,23 @@
+# Dependencies
+node_modules/
+package-lock.json
+
+# Production configurations
+.env
+.env.production
+
+# IDE-specific files
+#   (Customize for your IDE, e.g., Visual Studio Code)
+.vscode/
+
+# Build output
+dist/
+coverage/
+
+# Temporary files
+tmp/
+
+# SQLite-specific files
+#   (Ignore if using another database)
+*.sqlite
+*.sqlite3
