@@ -1,6 +1,7 @@
-import { TaskModel } from '../models/taskModel'; // Adjust path if needed
+import { TaskModel } from '../models/taskModel';
+import { Request, Response } from 'express';
 
-export const createTask = async (req, res) => {
+export const createTask = async (req: Request, res: Response) => {
   const { title, completed, dueDate } = req.body;
   try {
     const newTask = await TaskModel.create({ title, completed, dueDate });

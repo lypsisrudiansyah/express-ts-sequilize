@@ -3,7 +3,7 @@ import { Model, Table, Column, DataType } from 'sequelize-typescript';
 @Table({
   tableName: 'tasks',
 })
-export class TaskModel extends Model<TaskModel> {
+export class TaskModel extends Model {
   @Column({
     type: DataType.STRING,
     allowNull: false,
