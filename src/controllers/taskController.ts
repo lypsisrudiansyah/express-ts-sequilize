@@ -11,3 +11,13 @@ export const createTask = async (req: Request, res: Response) => {
     res.status(500).send('Error creating task');
   }
 };
+
+export const getTasks = async (req: Request, res: Response) => {
+  try {
+    const tasks = "Good to go";
+    res.json(tasks);
+  } catch (error) {
+    console.error('Error getting tasks:', error);
+    res.status(500).send('Error getting tasks');
+  }
+};
