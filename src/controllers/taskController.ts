@@ -11,18 +11,20 @@ export const index = async (req: Request, res: Response) => {
     res.json(tasks);
   } catch (error) {
     console.error('Error getting tasks:', error);
-    res.status(500).send('Error getting tasks');
+    res.status(500).json({'message': 'Error getting tasks'});
   }
 };
 
 export const store = async (req: Request, res: Response) => {
+  console.log(req.body);
+  
   const { title, completed, dueDate } = req.body;
   try {
     const newTask = { title, completed, dueDate, message: "Task Created" };
     res.json(newTask);
   } catch (error) {
     console.error('Error creating task:', error);
-    res.status(500).send('Error creating task');
+    res.status(500).json({'message': 'Error creating task'});
   }
 };
 
@@ -33,7 +35,7 @@ export const update = async (req: Request, res: Response) => {
     res.json(updatedTask);
   } catch (error) {
     console.error('Error updating task:', error);
-    res.status(500).send('Error updating task');
+    res.status(500).json({'message': 'Error updating task'});
   }
 };
 
@@ -43,6 +45,6 @@ export const deleteTask = async (req: Request, res: Response) => {
     res.json(message);
   } catch (error) {
     console.error('Error deleting task:', error);
-    res.status(500).send('Error deleting task');
+    res.status(500).json({'message': 'Error deleting task'});
   }
 };
