@@ -16,10 +16,11 @@ export const index = async (req: Request, res: Response) => {
 };
 
 export const show = async (req: Request, res: Response) => {
-  console.log(req);
+  console.log(req.params?.id);
+  // return req;
   
   try {
-    const task = { id: 1, title: `Task ${req} - This Just Dummy`, completed: false, dueDate: new Date() };
+    const task = { id: req.params?.id, title: `Task ${req.params?.id} - This Just Dummy`, completed: false, dueDate: new Date() };
     res.json(task);
   } catch (error) {
     console.error('Error getting task:', error);
