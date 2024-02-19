@@ -16,11 +16,8 @@ export const index = async (req: Request, res: Response) => {
 };
 
 export const show = async (req: Request, res: Response) => {
-  console.log(req.params?.id);
-  // return req;
-  
   try {
-    const task = { id: req.params?.id, title: `Task ${req.params?.id} - This Just Dummy`, completed: false, dueDate: new Date() };
+    const task = { id: req.params?.id, title: `Task ${req.params?.id} - Page : ${req.query?.page || 'Kosong'}`, completed: false, dueDate: new Date() };
     res.json(task);
   } catch (error) {
     console.error('Error getting task:', error);
@@ -31,10 +28,11 @@ export const show = async (req: Request, res: Response) => {
 export const store = async (req: Request, res: Response) => {
   console.log(req.body);
   
+  // * Destructuring
   const { title, completed, dueDate } = req.body;
   try {
-    const newTask = { title, completed, dueDate, message: "Task Created Dummy" };
-    res.json(newTask);
+    const newTask = { message: "Task Created Dummy", data: {title, completed, dueDate} };
+    res.status(201).json(newTask);
   } catch (error) {
     console.error('Error creating task:', error);
     res.status(500).json({'message': 'Error creating task'});
