@@ -15,12 +15,24 @@ export const index = async (req: Request, res: Response) => {
   }
 };
 
+export const show = async (req: Request, res: Response) => {
+  console.log(req);
+  
+  try {
+    const task = { id: 1, title: `Task ${req} - This Just Dummy`, completed: false, dueDate: new Date() };
+    res.json(task);
+  } catch (error) {
+    console.error('Error getting task:', error);
+    res.status(500).json({'message': 'Error getting task'});
+  }
+};
+
 export const store = async (req: Request, res: Response) => {
   console.log(req.body);
   
   const { title, completed, dueDate } = req.body;
   try {
-    const newTask = { title, completed, dueDate, message: "Task Created" };
+    const newTask = { title, completed, dueDate, message: "Task Created Dummy" };
     res.json(newTask);
   } catch (error) {
     console.error('Error creating task:', error);
