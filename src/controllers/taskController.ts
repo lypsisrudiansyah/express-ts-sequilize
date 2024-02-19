@@ -8,7 +8,7 @@ export const index = async (req: Request, res: Response) => {
       { id: 2, title: "Task 2", completed: true, dueDate: new Date() },
       { id: 3, title: "Task 3", completed: false, dueDate: new Date() },
     ];
-    res.json(tasks);
+    res.json({message: "Tasks retrieved successfully", search: req.query?.search, data: tasks});
   } catch (error) {
     console.error('Error getting tasks:', error);
     res.status(500).json({'message': 'Error getting tasks'});
@@ -17,7 +17,7 @@ export const index = async (req: Request, res: Response) => {
 
 export const show = async (req: Request, res: Response) => {
   try {
-    const task = { id: req.params?.id, title: `Task ${req.params?.id} - Page : ${req.query?.page || 'Kosong'}`, completed: false, dueDate: new Date() };
+    const task = { id: req.params?.id, title: `Task ID from Params : ${req.params?.id} }`, completed: false, dueDate: new Date() };
     res.json(task);
   } catch (error) {
     console.error('Error getting task:', error);
