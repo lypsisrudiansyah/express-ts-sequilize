@@ -3,12 +3,13 @@ import { Request, Response } from 'express';
 
 export const index = async (req: Request, res: Response) => {
   try {
-    const tasks = [
+    /* const tasks = [
       { id: 1, title: "Task 1", completed: false, dueDate: new Date() },
       { id: 2, title: "Task 2", completed: true, dueDate: new Date() },
       { id: 3, title: "Task 3", completed: false, dueDate: new Date() },
-    ];
-    res.json({message: "Tasks retrieved successfully", search: req.query?.search, data: tasks});
+    ]; */
+    let tasks = await TaskModel.findAll();
+    res.json({message: "Tasks retrieved successfully", search: req.query?.search, data: tasks, headers: req.headers});
   } catch (error) {
     console.error('Error getting tasks:', error);
     res.status(500).json({'message': 'Error getting tasks'});
@@ -17,7 +18,7 @@ export const index = async (req: Request, res: Response) => {
 
 export const show = async (req: Request, res: Response) => {
   try {
-    const task = { id: req.params?.id, title: `Task ID from Params : ${req.params?.id} }`, completed: false, dueDate: new Date() };
+    const task = { id: parseInt(req.params?.id), title: `Task ID from Params : ${req.params?.id} }`, completed: false, dueDate: new Date() };
     res.json(task);
   } catch (error) {
     console.error('Error getting task:', error);
