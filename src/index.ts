@@ -1,7 +1,7 @@
 import express from 'express';
 import taskRoutes from './routers/taskRouter';
 import sequelize from './database/database_config'; // Adjust path if needed
-import { TaskModel } from './models/taskModel';
+// import { TaskModel } from './models/taskModel';
 
 const app = express();
 
@@ -11,9 +11,15 @@ app.use('/api', taskRoutes);
 // sequelize.sync({force: true}).then(() => {
 //   console.log('Database & tables created!');
 // });
-TaskModel.sync({force: true}).then(() => {
+
+// sequelize.modelManager.addModel(TaskModel);
+sequelize.sync({alter: true}).then(() => {
   console.log('Database & tables created!');
 });
+
+// TaskModel.sync({force: true}).then(() => {
+//   console.log('Database & tables created!');
+// });
 
 
 (async () => {

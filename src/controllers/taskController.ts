@@ -1,8 +1,9 @@
-import { TaskModel } from '../models/taskModel';
+import TaskModel from '../models/taskModel';
 import { Request, Response } from 'express';
 
 export const index = async (req: Request, res: Response) => {
   try {
+    TaskModel.create({ title: "Task 1", completed: false, dueDate: new Date() });
     /* const tasks = [
       { id: 1, title: "Task 1", completed: false, dueDate: new Date() },
       { id: 2, title: "Task 2", completed: true, dueDate: new Date() },
