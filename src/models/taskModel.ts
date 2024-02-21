@@ -28,6 +28,7 @@ class TaskModel extends Model {
   public id!: number;
   public title!: string;
   public completed!: boolean;
+  public image?: string;
   public dueDate!: Date;
 }
 
@@ -45,6 +46,10 @@ TaskModel.init({
   completed: {
     type: DataTypes.BOOLEAN,
     allowNull: false,
+  },
+  image: {
+    type: new DataTypes.STRING(128),
+    allowNull: true,
   },
   dueDate: {
     type: new DataTypes.DATE,

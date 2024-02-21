@@ -6,6 +6,7 @@ import sequelize from './database/database_config'; // Adjust path if needed
 const app = express();
 
 app.use(express.json());
+app.use(express.urlencoded({ type:'application/form-data' }));
 app.use('/api', taskRoutes);
 // sequelize.define("TaskModel", TaskModel);
 // sequelize.sync({force: true}).then(() => {
