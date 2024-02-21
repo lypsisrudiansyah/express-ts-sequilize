@@ -13,7 +13,7 @@ app.use('/api', taskRoutes);
 // });
 
 // sequelize.modelManager.addModel(TaskModel);
-sequelize.sync({alter: true}).then(() => {
+sequelize.sync({}).then(() => {
   console.log('Database & tables created!');
 });
 
