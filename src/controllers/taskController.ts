@@ -1,16 +1,28 @@
 import TaskModel from '../models/taskModel';
 import { Request, Response } from 'express';
+import multer from 'multer';
+import path from 'path';
+import { Op } from 'sequelize';
+
+// const upload = multer({ dest: 'public/storage/uploads/' });
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    console.log('req:', req.body);
+    cb(null, 'public/storage/uploads/')
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + path.extname(file.originalname)) //Appending extension
+  }
+})
+
+const upload = multer({ storage: storage });
 
 export const index = async (req: Request, res: Response) => {
   try {
-    TaskModel.create({ title: "Task 1", completed: false, dueDate: new Date() });
-    TaskModel.create({ title: "Task 2", completed: false, dueDate: new Date() });
-    TaskModel.create({ title: "Task 3", completed: false, dueDate: new Date() });
-    /* const tasks = [
-      { id: 1, title: "Task 1", completed: false, dueDate: new Date() },
-      { id: 2, title: "Task 2", completed: true, dueDate: new Date() },
-      { id: 3, title: "Task 3", completed: false, dueDate: new Date() },
-    ]; */
+    // TaskModel.create({ title: "Task 1", completed: false, dueDate: new Date() });
+    // TaskModel.create({ title: "Task 2", completed: false, dueDate: new Date() });
+    // TaskModel.create({ title: "Task 3", completed: false, dueDate: new Date() });
+    TaskModel.destroy({ where: { id: { [Op.gte]: 19 } } });
     let page = typeof req.query?.page === 'string' ? parseInt(req.query.page) : 1;
 
     const pageSize = 5; // number of items per page
@@ -60,10 +72,37 @@ export const store = async (req: Request, res: Response) => {
 };
 
 export const update = async (req: Request, res: Response) => {
-  const { title, completed, dueDate } = req.body;
+  console.log("Induk", req.body);
+  const { id } = req.params; // Get the task ID from the request parameters
+
   try {
-    const updatedTask = { title, completed, dueDate, message: "Task Updated" };
-    res.json(updatedTask);
+    let imageFilename: string | undefined = undefined;
+
+    await upload.single('image')(req, res, async (err) => {
+      if (err) {
+        // Handle the error
+        console.error(err);
+        return res.status(500).json({ 'message': 'Error updating task' });
+
+        // return;
+      } else {
+        const { title, completed, dueDate } = req.body;
+
+        imageFilename = req.file?.filename;
+        let task = await TaskModel.findByPk(id);
+        const imagePath = imageFilename ? `public/storage/uploads/${imageFilename}` : task?.image;
+
+        TaskModel.update({ title, completed, dueDate, image: imagePath }, { where: { id } });
+      }
+    });
+
+    /* if (numberOfAffectedRows > 0) {
+      const updatedTask = affectedRows[0];
+      res.json({ ...updatedTask, message: "Task Updated" });
+    } else {
+      res.status(404).json({ message: 'Task not found' });
+    } */
+    return res.json({ message: "Task Updated" });
   } catch (error) {
     console.error('Error updating task:', error);
     res.status(500).json({ 'message': 'Error updating task' });
