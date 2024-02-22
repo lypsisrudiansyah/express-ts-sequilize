@@ -96,6 +96,19 @@ export const update = async (req: Request, res: Response) => {
       }
     });
 
+    // * Example sending more than 1 field of image & multiple images from postman{1. is 1 field for multiple image, 2. trick using naming prefix [] nameField[]. }
+    /* await upload.fields([{ name: 'image', maxCount: 2 }, { name: 'imageProof', maxCount: 1 }, {name: 'adama[]', maxCount: 2}])(req, res, (err) => {
+      if (err) {
+        // Handle the error
+        console.error(err);
+        return;
+      } else {
+        console.log("Rud Body",req.body);
+        console.log('Files uploaded');
+        console.log(req.files); // req.files is object (fieldname -> array of files)
+      }
+    }); */
+
     /* if (numberOfAffectedRows > 0) {
       const updatedTask = affectedRows[0];
       res.json({ ...updatedTask, message: "Task Updated" });
